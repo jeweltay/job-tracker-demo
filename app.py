@@ -1,7 +1,7 @@
 # app.py - COMPLETE CRUD SYSTEM
 import os
 import csv
-from flask import Flask, render_template, request, redirect, url_for, Response
+from flask import Flask, render_template, request, redirect, url_for, Response, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -14,9 +14,12 @@ if 'DATABASE_URL' in os.environ:
 else:
 	# Local development (on laptop)
 	basedir = os.path.abspath(os.path.dirname(__file__))
-	app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite://" + os.path.join(basedir, "jobscore.db")
+	app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "jobscore.db")
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+app.config["SECRET_KEY"] = "demo-secret-key-12345"
+
 db = SQLAlchemy(app)
 
 class Job(db.Model):
@@ -137,26 +140,9 @@ def add_job_form():
             
             notes = request.form['notes']
             
-            # Create new job
-            new_job = Job(
-                company_name=company_name,
-                job_title=job_title,
-                location=location,
-                salary_range=f"Score: {salary_fit}",
-                job_type=job_type,
-                application_date=application_date,
-                response_status=response_status,
-                career_fit_now=career_fit_now,
-                interest_level=interest_level,
-                growth_potential=growth_potential,
-                salary_fit=salary_fit,
-                total_score=total_score,
-                notes=notes
-            )
-            
-            db.session.add(new_job)
-            db.session.commit()
-            
+            # ========== DEMO MODIFICATION ==========
+            # Show flash message instead of saving to database
+            flash(f"Demo: Would have added '{job_title}' at {company_name} to your tracker! In the live version, this would be saved.", "success")
             return redirect(url_for('home'))
             
         except Exception as e:
@@ -167,9 +153,6 @@ def add_job_form():
                          stage_options=STAGE_OPTIONS,
                          score_options=SCORE_OPTIONS)
 
-# ... your existing routes ...
-
-# Keep your existing import routes for reference
 @app.route("/create-db")
 def create_db():
     try:
@@ -437,37 +420,39 @@ def edit_job(job_id):
     
     if request.method == "POST":
         try:
-            # Update job with form data
-            job.company_name = request.form['company_name']
-            job.job_title = request.form['job_title']
-            job.location = request.form['location']
-            job.job_type = request.form['job_type']
-            job.application_date = request.form['application_date']
-            job.response_status = request.form['response_status']
+            # Get form data (keep all validation logic)
+            company_name = request.form['company_name']
+            job_title = request.form['job_title']
+            location = request.form['location']
+            job_type = request.form['job_type']
+            application_date = request.form['application_date']
+            response_status = request.form['response_status']
             
             # Update scores
-            job.career_fit_now = float(request.form['career_fit_now'])
-            job.interest_level = float(request.form['interest_level'])
-            job.growth_potential = float(request.form['growth_potential'])
-            job.salary_fit = float(request.form['salary_fit'])
+            career_fit_now = float(request.form['career_fit_now'])
+            interest_level = float(request.form['interest_level'])
+            growth_potential = float(request.form['growth_potential'])
+            salary_fit = float(request.form['salary_fit'])
             
             # Recalculate total score
-            job.total_score = (
-                job.interest_level * 0.3 + 
-                job.growth_potential * 0.3 + 
-                job.career_fit_now * 0.2 + 
-                job.salary_fit * 0.2
+            total_score = (
+                interest_level * 0.3 + 
+                growth_potential * 0.3 + 
+                career_fit_now * 0.2 + 
+                salary_fit * 0.2
             )
             
-            job.notes = request.form['notes']
+            notes = request.form['notes']
             
-            db.session.commit()
+            # ========== DEMO MODIFICATION ==========
+            # Show flash message instead of saving to database
+            flash(f"Demo: Would have updated '{job_title}' at {company_name}! In the live version, your changes would be saved.", "success")
             return redirect(url_for('home'))
             
         except Exception as e:
             return f"Error updating job: {str(e)}"
     
-    # If GET request, show pre-filled form
+    # If GET request, show pre-filled form (unchanged)
     return render_template("edit_job.html", 
                          job=job,
                          stage_options=STAGE_OPTIONS,
@@ -518,8 +503,9 @@ def delete_job(job_id):
     try:
         job = Job.query.get(job_id)
         if job:
-            db.session.delete(job)
-            db.session.commit()
+            # ========== DEMO MODIFICATION ==========
+            # Show flash message instead of deleting from database
+            flash(f"Demo: Would have deleted '{job.job_title}' at {job.company_name}! In the live version, this would be permanently removed.", "success")
             return redirect(url_for('home'))
         else:
             return "Job not found", 404
