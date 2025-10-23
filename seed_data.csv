@@ -1,0 +1,4 @@
+id,company,position,location,stage,response,score_criteria,overall_score,notes
+1,OpenAI,Project Manager,Remote,Interview,Pending,Communication;Experience;Culture,4.5,"Great alignment with skills"
+2,Google,Program Manager,Singapore,Applied,None,Technical;Leadership,3.2,"Applied via referral"
+3,HireRight,Operations Manager,Remote,Rejected,None,Experience;Fit,2.8,"Did not meet specific industry exp"

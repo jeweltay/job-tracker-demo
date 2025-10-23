@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Job Search Analytics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background-color: #f5f5f5;
+        }
+        .dashboard-header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .filters-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+        }
+        
+        /* Dashboard Tabs */
+        .dashboard-tabs {
+            display: flex;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: #f8f9fa;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .tab.active {
+            background: #2196F3;
+            color: white;
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Charts Grid - IMPROVED SIZING */
+        .charts-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+            margin-bottom: 20px;
+        }
+        .chart-container { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: 400px; /* Better height for charts */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .full-width { 
+            grid-column: 1 / -1; 
+            height: 450px; /* Taller for full-width charts */
+        }
+        .chart-title { 
+            text-align: center; 
+            margin-bottom: 15px; 
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .chart-container canvas {
+            flex: 1;
+            min-height: 0;
+            width: 100% !important; /* Force full width */
+            height: 100% !important; /* Force full height */
+        }
+        
+        /* Success Patterns - FIXED LAYOUT */
+        .success-patterns-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            height: 100%;
+        }
+        
+        /* Custom Charts Styles */
+        .chart-builder {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .builder-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .control-group label {
+            font-weight: bold;
+            color: #333;
+        }
+        .preview-area {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .custom-charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        /* Navigation & Stats */
+        .nav-buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .btn { 
+            padding: 10px 20px; 
+            margin: 0 10px; 
+            background: #2196F3; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        .stats-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #2196F3;
+        }
+        .insight-box {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .chart-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #999;
+            font-style: italic;
+        }
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .remove-chart {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <h1>Job Search Analytics Dashboard</h1>
+        <p>Get insights from your job search data</p>
+    </div>
+
+    <div class="filters-bar">
+        <div class="filter-group">
+            <label><strong>Time Period:</strong></label>
+            <select id="daysFilter" class="filter-select">
+                <option value="all">All Time</option>
+                <option value="30">Last 30 Days</option>
+                <option value="90">Last 90 Days</option>
+                <option value="7">Last 7 Days</option>
+            </select>
+        </div>
+        
+        <button class="btn" onclick="loadDashboardData()">Apply Filters & Refresh</button>
+        <span id="filterStatus" style="margin-left: auto; color: #666;"></span>
+    </div>
+
+    <!-- Dashboard Tabs -->
+    <div class="dashboard-tabs">
+        <button class="tab active" onclick="switchTab('overview')">📊 Overview</button>
+        <button class="tab" onclick="switchTab('custom')">🔧 Custom Charts</button>
+    </div>
+
+    <div id="statsGrid" class="stats-grid">
+        <div class="loading">Loading statistics...</div>
+    </div>
+
+    <!-- Overview Tab (Your Original Dashboard) -->
+    <div id="overviewTab" class="tab-content active">
+        <div class="charts-grid">
+            <div class="chart-container">
+                <div class="chart-title">Score Distribution</div>
+                <canvas id="scoreChart"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Industry Focus</div>
+                <canvas id="industryChart"></canvas>
+            </div>
+            
+            <div class="chart-container full-width">
+                <div class="chart-title">Interest vs Career Fit Analysis</div>
+                <canvas id="scatterChart"></canvas>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-container full-width">
+                <div class="chart-title">Application Trends Over Time</div>
+                <canvas id="trendsChart"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Success Patterns</div>
+                <div id="successInsights" class="success-patterns-container">
+                    <div class="loading">Loading insights...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Charts Tab -->
+    <div id="customTab" class="tab-content">
+        <div class="chart-builder">
+            <h3>🔧 Build Your Own Chart</h3>
+            
+          <div class="builder-controls">
+    <div class="control-group">
+        <label>X-Axis Category:</label>
+        <select id="xAxis" onchange="updateYAxisOptions(); updateChartPreview();">
+            <option value="status">Application Status</option>
+            <option value="interest_level">Interest Level</option>
+            <option value="industry">Industry</option>
+        </select>
+    </div>
+    
+    <div class="control-group">
+        <label>Y-Axis Metric:</label>
+        <select id="yAxis" onchange="updateChartPreview()">
+            <!-- Options will be populated dynamically -->
+            <option value="career_fit">Career Fit Score</option>
+        </select>
+    </div>
+    
+    <div class="control-group">
+        <label>Chart Type:</label>
+        <select id="chartType" onchange="updateChartPreview()">
+            <option value="bar">Bar Chart</option>
+            <option value="pie">Pie Chart</option>
+            <option value="doughnut">Doughnut Chart</option>
+        </select>
+    </div>
+</div>
+
+            <div class="preview-area">
+                <div id="chartPreview">
+                    <p style="color: #666; text-align: center;">
+                        Configure your chart above to see a preview<br>
+                        Then click "Add to Dashboard" to save it
+                    </p>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="addCustomChart()" style="width: 100%;">
+                ➕ Add This Chart to Dashboard
+            </button>
+        </div>
+
+        <h3>Your Custom Charts</h3>
+        <div class="custom-charts-grid" id="customChartsGrid">
+            <div class="chart-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
+                No custom charts yet. Build your first chart above!
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <a href="/" class="btn">📋 Back to Job List</a>
+        <a href="/add" class="btn">+ Add New Job</a>
+    </div>
+
+    <script>
+        let currentData = null;
+        let customCharts = [];
+
+        // Tab switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            document.querySelector(`[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            if (tabName === 'custom' && currentData) {
+                updateChartPreview();
+            }
+        }
+
+        // Dynamic Y-axis options based on X-axis selection
+function updateYAxisOptions() {
+    const xAxis = document.getElementById('xAxis').value;
+    const yAxisSelect = document.getElementById('yAxis');
+    
+    // Clear existing options
+    yAxisSelect.innerHTML = '';
+    
+    // Define available Y-axis options for each X-axis
+    const options = {
+        'status': [
+            { value: 'career_fit', label: 'Career Fit Score' },
+            { value: 'interest', label: 'Interest Level' },
+            { value: 'growth', label: 'Growth Potential' },
+            { value: 'salary', label: 'Salary Fit' },
+            { value: 'total', label: 'Total Score' }
+        ],
+        'interest_level': [
+            { value: 'count', label: 'Count of Applications' }
+        ],
+        'industry': [
+            { value: 'career_fit', label: 'Career Fit Score' },
+            { value: 'interest', label: 'Interest Level' },
+            { value: 'growth', label: 'Growth Potential' },
+            { value: 'salary', label: 'Salary Fit' },
+            { value: 'total', label: 'Total Score' }
+        ]
+    };
+    
+    // Add the appropriate options
+    const availableOptions = options[xAxis] || [];
+    availableOptions.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option.value;
+        optionElement.textContent = option.label;
+        yAxisSelect.appendChild(optionElement);
+    });
+    
+    // Update the preview with new selection
+    updateChartPreview();
+}
+
+        // Load dashboard data
+        function loadDashboardData() {
+            const daysFilter = document.getElementById('daysFilter').value;
+            const filterStatus = document.getElementById('filterStatus');
+            
+            filterStatus.textContent = 'Loading...';
+            
+            fetch(`/dashboard-data?days=${daysFilter}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        filterStatus.textContent = `Error: ${data.error}`;
+                        return;
+                    }
+                    
+                    currentData = data;
+            
+            // ← ADD THESE LINES TEMPORARILY:
+            console.log("📊 ALL AVAILABLE DATA:", data);
+            console.log("📈 CHARTS DATA:", data.charts);
+            
+            updateStats(data);
+            renderOverviewCharts(data);
+            filterStatus.textContent = `Showing: ${data.filters.date_range} • ${data.filters.total_applications} applications`;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            filterStatus.textContent = 'Error loading data';
+        });
+}
+
+        // Update chart preview in custom tab
+       function updateChartPreview() {
+    if (!currentData) {
+        console.log("❌ No currentData available");
+        return;
+    }
+    
+    const xAxis = document.getElementById('xAxis').value;
+    const yAxis = document.getElementById('yAxis').value;
+    const chartType = document.getElementById('chartType').value;
+    
+    console.log("🔄 Generating preview:", { xAxis, yAxis, chartType });
+    
+    const previewData = generatePreviewData(xAxis, yAxis);
+    console.log("📊 Preview data:", previewData);
+    
+    renderPreviewChart(previewData, chartType, xAxis, yAxis);
+}
+
+        // Generate data for preview based on selections
+function generatePreviewData(xAxis, yAxis) {
+    if (!currentData || !currentData.charts) {
+        return { labels: ['No data'], data: [0], title: 'No data available' };
+    }
+
+    const charts = currentData.charts;
+    
+    // ← ADD THESE DEBUG LINES:
+    console.log("🎯 generatePreviewData called with:", { xAxis, yAxis });
+
+    switch(xAxis) {
+        case 'status':
+            return generateStatusData(charts, yAxis);
+        case 'interest_level':
+            return generateInterestData(charts, yAxis);
+        case 'industry':
+            return generateIndustryData(charts, yAxis);
+        default:
+            return { labels: ['Unknown category'], data: [0], title: 'Invalid selection' };
+    }
+}
+
+function generateStatusData(charts, yAxis) {
+    console.log("🔍 Status Data Available:", charts.status_analysis);
+    
+    // Map Y-axis selections to actual field names (similar to industry)
+    const fieldMap = {
+        'career_fit': 'avg_career_fit',
+        'interest': 'avg_interest', 
+        'growth': 'avg_growth',
+        'salary': 'avg_salary',
+        'total': 'avg_overall'
+    };
+    
+    const actualField = fieldMap[yAxis] || 'avg_overall';
+    
+    if (!charts.status_analysis) {
+        console.log("❌ No status analysis data available");
+        return { labels: ['No data'], data: [0], title: 'Status data not available' };
+    }
+    
+    const statusData = charts.status_analysis;
+    const labels = Object.keys(statusData);
+    const data = labels.map(status => {
+        if (statusData[status] && statusData[status][actualField]) {
+            const value = statusData[status][actualField];
+            console.log(`📊 ${status}: ${value}`);
+            return value;
+        }
+        return 0;
+    });
+    
+    console.log("📈 Status Chart Data:", { labels, data });
+    
+    return {
+        labels: labels,
+        data: data,
+        title: `Average ${yAxis.replace('_', ' ')} by Application Status`
+    };
+}
+
+function generateInterestData(charts, yAxis) {
+    console.log("🔍 Interest Data Available:", charts.interest_distribution);
+    
+    if (!charts.interest_distribution) {
+        console.log("❌ No interest distribution data available");
+        return { labels: ['No data'], data: [0], title: 'Interest data not available' };
+    }
+    
+    const interestData = charts.interest_distribution;
+    const labels = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'];
+    const data = [
+        interestData[1] || 0,
+        interestData[2] || 0, 
+        interestData[3] || 0,
+        interestData[4] || 0,
+        interestData[5] || 0
+    ];
+    
+    console.log("📈 Interest Chart Data:", { labels, data });
+    
+    return {
+        labels: labels,
+        data: data,
+        title: 'Applications by Interest Level'
+    };
+}
+
+function generateIndustryData(charts, yAxis) {
+    const industryData = charts.industry_averages;
+    
+    // Map Y-axis selections to actual field names in your data
+    const fieldMap = {
+        'career_fit': 'avg_career_fit',
+        'interest': 'avg_interest', 
+        'growth': 'avg_growth',
+        'salary': 'avg_salary',
+        'total': 'avg_overall'  // ← This is the fix!
+    };
+    
+    const actualField = fieldMap[yAxis] || 'avg_overall';
+    console.log("🎯 Looking for field:", actualField);
+
+    // Get top 8 industries by count
+    const topIndustries = Object.entries(charts.industry_analysis)
+        .sort((a, b) => b[1] - a[1]) // Sort by count descending
+        .slice(0, 8) // Take top 8
+        .map(([industry]) => industry);
+
+    console.log("🏷️ Top Industries:", topIndustries);
+    
+    const labels = topIndustries;
+    const data = topIndustries.map(industry => {
+        if (industryData[industry] && industryData[industry][actualField]) {
+            const value = industryData[industry][actualField];
+            console.log(`📊 ${industry}: ${value}`);
+            return value;
+        }
+        console.log(`❌ ${industry}: No data for ${actualField}`);
+        return 0;
+    });
+    
+    console.log("📈 Final Data:", data);
+    
+    return {
+        labels: labels,
+        data: data,
+        title: `Average ${yAxis.replace('_', ' ')} by Industry`
+    };
+}
+
+        // Render preview chart 
+function renderPreviewChart(data, chartType, xAxis, yAxis) {
+    console.log("🎨 Rendering chart with:", { data, chartType });
+    
+    const previewContainer = document.getElementById('chartPreview');
+    console.log("📦 Preview container:", previewContainer);
+    
+    // Clear and create new canvas with explicit dimensions
+    previewContainer.innerHTML = `
+        <canvas id="previewCanvas" width="400" height="300" style="display: block;"></canvas>
+    `;
+    
+    const canvas = document.getElementById('previewCanvas');
+    console.log("🖼️ Canvas element:", canvas);
+    
+    if (!canvas) {
+        console.log("❌ Canvas element not found!");
+        return;
+    }
+    
+    const ctx = canvas.getContext('2d');
+    console.log("🖌️ Canvas context:", ctx);
+    
+    // Destroy any existing chart on this canvas
+    if (window.previewChart && typeof window.previewChart.destroy === 'function') {
+        window.previewChart.destroy();
+    }
+    
+    const chartConfig = {
+        type: chartType,
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: data.title,
+                data: data.data,
+                backgroundColor: getChartColors(chartType, data.labels.length)
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: data.title
+                }
+            }
+        }
+    };
+    
+    window.previewChart = new Chart(ctx, chartConfig);
+    console.log("✅ Chart created successfully!");
+}
+
+function getChartColors(chartType, count) {
+    if (chartType === 'bar') {
+        return '#2196F3';
+    }
+    
+    // Color palette for pie/doughnut charts
+    const palette = ['#ff6b6b', '#ffd166', '#06d6a0', '#118ab2', '#073b4c', '#ef476f', '#ff9a00', '#83c5be'];
+    return palette.slice(0, count);
+}
+
+// Add custom chart to dashboard
+function addCustomChart() {
+    const xAxis = document.getElementById('xAxis').value;
+    const yAxis = document.getElementById('yAxis').value;
+    const chartType = document.getElementById('chartType').value;
+    
+    const customChart = {
+        id: Date.now(),
+        xAxis: xAxis,
+        yAxis: yAxis,
+        chartType: chartType,
+        title: getChartTitle(xAxis, yAxis)
+    };
+    
+    customCharts.push(customChart);
+    renderCustomCharts();
+    saveCustomCharts();
+}
+
+function getChartTitle(xAxis, yAxis) {
+    const xLabels = {
+        'status': 'Application Status',
+        'interest_level': 'Interest Level', 
+        'industry': 'Industry'
+    };
+    
+    const yLabels = {
+        'career_fit': 'Career Fit Score',
+        'interest': 'Interest Level',
+        'growth': 'Growth Potential',
+        'salary': 'Salary Fit',
+        'total': 'Total Score',
+        'count': 'Count of Applications'
+    };
+    
+    return `${xLabels[xAxis]} vs ${yLabels[yAxis]}`;
+}
+function getChartTitle(analysisType, scoreMetric) {
+    const types = {
+        'status_scores': 'Status vs Scores',
+        'interest_distribution': 'Interest Distribution', 
+        'industry_scores': 'Industry vs Scores'
+    };
+    
+    const metrics = {
+        'career_fit': 'Career Fit',
+        'interest': 'Interest',
+        'growth': 'Growth',
+        'salary': 'Salary',
+        'total': 'Total Score'
+    };
+    
+    return `${types[analysisType]} - ${metrics[scoreMetric]}`;
+}
+
+        // Render all custom charts
+        function renderCustomCharts() {
+            const container = document.getElementById('customChartsGrid');
+            
+            if (customCharts.length === 0) {
+                container.innerHTML = `
+                    <div class="chart-placeholder" style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
+                        No custom charts yet. Build your first chart above!
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = customCharts.map(chart => `
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="chart-title">${chart.title}</div>
+                        <button class="remove-chart" onclick="removeCustomChart(${chart.id})">×</button>
+                    </div>
+                    <canvas id="customChart${chart.id}"></canvas>
+                </div>
+            `).join('');
+            
+            customCharts.forEach(chart => {
+                renderSingleCustomChart(chart);
+            });
+        }
+
+        // Remove custom chart
+        function removeCustomChart(chartId) {
+            customCharts = customCharts.filter(chart => chart.id !== chartId);
+            renderCustomCharts();
+            saveCustomCharts();
+        }
+
+        // Save/Load custom charts
+        function saveCustomCharts() {
+            localStorage.setItem('customCharts', JSON.stringify(customCharts));
+        }
+
+        function loadCustomCharts() {
+            const saved = localStorage.getItem('customCharts');
+            if (saved) {
+                customCharts = JSON.parse(saved);
+                renderCustomCharts();
+            }
+        }
+
+        // Render single custom chart
+        function renderSingleCustomChart(chart) {
+    const canvas = document.getElementById(`customChart${chart.id}`);
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    const data = generateCustomChartData(chart);
+    
+    new Chart(ctx, {
+        type: chart.chartType,
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+}
+
+function generateCustomChartData(chart) {
+    if (!currentData) {
+        return { labels: ['No data'], datasets: [{ data: [0], backgroundColor: '#2196F3' }] };
+    }
+    
+    const previewData = generatePreviewData(chart.analysisType, chart.scoreMetric);
+    
+    return {
+        labels: previewData.labels,
+        datasets: [{
+            label: previewData.title,
+            data: previewData.data,
+            backgroundColor: getChartColors(chart.chartType, previewData.labels.length)
+        }]
+    };
+}
+
+        // Generate data for custom charts - FIXED VERSION
+function generateCustomChartData(chart) {
+    if (!currentData) {
+        return { labels: ['No data'], datasets: [{ data: [0], backgroundColor: '#2196F3' }] };
+    }
+    
+    const charts = currentData.charts;
+    let labels = [];
+    let data = [];
+    
+    // Handle X-Axis selection
+    if (chart.xAxis === 'industries') {
+        labels = Object.keys(charts.industry_analysis);
+        data = Object.values(charts.industry_analysis);
+    } 
+    else if (chart.xAxis === 'score_ranges') {
+        labels = Object.keys(charts.score_distribution);
+        data = Object.values(charts.score_distribution);
+    }
+    else if (chart.xAxis === 'salary_scores') {
+        labels = Object.keys(charts.salary_analysis);
+        data = Object.values(charts.salary_analysis);
+    }
+    else {
+        // Fallback for other types (we'll add more later)
+        labels = ['Category A', 'Category B', 'Category C'];
+        data = [15, 25, 10];
+    }
+    
+    return {
+        labels: labels,
+        datasets: [{
+            label: chart.yAxis.replace(/_/g, ' ').toUpperCase(),
+            data: data,
+            backgroundColor: chart.type === 'pie' ? 
+                ['#ff6b6b', '#ffd166', '#06d6a0', '#118ab2', '#073b4c'] :
+                '#2196F3'
+        }]
+    };
+}
+
+        // Update statistics cards
+        function updateStats(data) {
+            const stats = data.filters;
+            const success = data.charts.success_patterns;
+            
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stats-card">
+                    <div class="stat-number">${stats.total_applications}</div>
+                    <div>Total Applications</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stat-number">${success.high_score_count}</div>
+                    <div>High-Score Jobs (4+)</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stat-number">${Math.round(success.high_score_avg_interest * 10)/10}</div>
+                    <div>Avg Interest (High Score)</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stat-number">${Math.round(success.high_score_avg_growth * 10)/10}</div>
+                    <div>Avg Growth (High Score)</div>
+                </div>
+            `;
+        }
+
+        // Render overview charts - FIXED CONFIGURATIONS
+        function renderOverviewCharts(data) {
+            const charts = data.charts;
+            
+            // Destroy existing charts
+            if (window.scoreChart && typeof window.scoreChart.destroy === 'function') window.scoreChart.destroy();
+            if (window.industryChart && typeof window.industryChart.destroy === 'function') window.industryChart.destroy();
+            if (window.scatterChart && typeof window.scatterChart.destroy === 'function') window.scatterChart.destroy();
+            if (window.trendsChart && typeof window.trendsChart.destroy === 'function') window.trendsChart.destroy();
+            
+            // Score Distribution Chart
+            window.scoreChart = new Chart(document.getElementById('scoreChart'), {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(charts.score_distribution),
+                    datasets: [{
+                        label: 'Applications',
+                        data: Object.values(charts.score_distribution),
+                        backgroundColor: ['#ff6b6b', '#ffd166', '#06d6a0', '#118ab2']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: { display: true, text: 'Application Quality Distribution' }
+                    }
+                }
+            });
+            
+            // Industry Chart - FIXED PIE CHART
+window.industryChart = new Chart(document.getElementById('industryChart'), {
+    type: 'pie',
+    data: {
+        labels: Object.keys(charts.industry_analysis),
+        datasets: [{
+            data: Object.values(charts.industry_analysis),
+            backgroundColor: ['#ff6b6b', '#ffd166', '#06d6a0', '#118ab2', '#073b4c', '#ef476f', '#ff9a00', '#83c5be', '#006d77', '#e29578']
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,  // ← ADD THIS LINE
+        plugins: {
+            legend: { 
+                position: 'right',
+                labels: {
+                    boxWidth: 12,
+                    font: { size: 11 }
+                }
+            },
+            title: { 
+                display: true, 
+                text: 'Industry Application Focus',
+                font: { size: 14 }
+            }
+        }
+    }
+});
+            
+            // Scatter Chart - FIXED LAYOUT
+window.scatterChart = new Chart(document.getElementById('scatterChart'), {
+    type: 'scatter',
+    data: {
+        datasets: [{
+            label: 'Job Applications',
+            data: charts.scatter_analysis,
+            backgroundColor: 'rgba(33, 150, 243, 0.6)',
+            pointRadius: 6,
+            pointHoverRadius: 8
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,  // ← ADD THIS LINE
+        scales: {
+            x: {
+                title: { display: true, text: 'Interest Level' },
+                grid: { drawBorder: false },
+                ticks: { stepSize: 1 },
+                min: 0.5,  // ← ADD THESE TO CONTROL RANGE
+                max: 5.5   // ←
+            },
+            y: {
+                title: { display: true, text: 'Career Fit Now' },
+                grid: { drawBorder: false },
+                ticks: { stepSize: 1 },
+                min: 0.5,  // ←
+                max: 5.5   // ←
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const point = context.raw;
+                        return [
+                            `Company: ${point.company}`,
+                            `Role: ${point.title}`,
+                            `Interest: ${point.x}, Fit: ${point.y}`,
+                            `Growth: ${point.growth}, Total: ${point.total_score.toFixed(1)}`
+                        ];
+                    }
+                }
+            },
+            title: { 
+                display: true, 
+                text: 'Career Pivot Sweet Spots',
+                font: { size: 14 }  // ← ADD FONT SIZE
+            }
+        }
+    }
+});
+            
+            // Application Trends Chart - FIXED LAYOUT
+if (charts.application_trends.length > 0) {
+    window.trendsChart = new Chart(document.getElementById('trendsChart'), {
+        type: 'line',
+        data: {
+            labels: charts.application_trends.map(t => `Week ${t.week.split('-')[1]}`),
+            datasets: [{
+                label: 'Applications per Week',
+                data: charts.application_trends.map(t => t.count),
+                borderColor: '#2196F3',
+                backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,  // ← ADD THIS LINE
+            plugins: {
+                title: { 
+                    display: true, 
+                    text: 'Your Application Velocity',
+                    font: { size: 14 }  // ← ADD FONT SIZE
+                }
+            },
+            scales: {
+                x: { 
+                    grid: { display: false },
+                    ticks: {
+                        maxRotation: 0  // ← PREVENTS LABEL CROWDING
+                    }
+                },
+                y: { 
+                    beginAtZero: true,
+                    grid: { drawBorder: false }
+                }
+            }
+        }
+    });
+}
+            
+            // Success Insights
+            const success = charts.success_patterns;
+            document.getElementById('successInsights').innerHTML = `
+                <div class="insight-box">
+                    <strong>High-Score Jobs (${success.high_score_count})</strong><br>
+                    Average Interest: ${success.high_score_avg_interest.toFixed(1)}/5<br>
+                    Average Growth: ${success.high_score_avg_growth.toFixed(1)}/5
+                </div>
+                <div class="insight-box">
+                    <strong>Low-Score Jobs (${success.low_score_count})</strong><br>
+                    Average Interest: ${success.low_score_avg_interest.toFixed(1)}/5<br>
+                    Average Growth: ${success.low_score_avg_growth.toFixed(1)}/5
+                </div>
+                <div class="insight-box">
+                    <strong>Key Insight</strong><br>
+                    ${success.high_score_avg_interest > success.low_score_avg_interest ? 
+                      'High-interest roles tend to be better fits!' : 
+                      'Consider focusing on roles that excite you more.'}
+                </div>
+            `;
+        }
+
+        // Initialize
+        loadCustomCharts();
+        updateYAxisOptions();
+        loadDashboardData();
+    </script>
+</body>
+</html>

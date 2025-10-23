@@ -1,0 +1,120 @@
+company_id,company_name,tags,position,location,date_applied,stage,response,career_fit_now,interest_level,growth_potential,salary_fit,total_score,notes
+1,Company A,"Consumer Goods, Logistics, Media/Comm",Project Manager Creative Operations,Germany,2025-07-31,Rejected,Yes,3,3,3,5,3.4,Creative/Operations mix; some new methods but coordination-heavy.
+2,Company B,EdTech,Content Project Manager,Remote (US),2025-08-02,Applied,No,5,2,3,5,3.5,"EdTech content role, mainly coordination and management."
+3,Company C,"HR/Recruitment, Consulting, Project Mgmt Services",Marketing Project Manager (Remote),Remote (US),2025-08-02,Rejected,Yes,4,2,3,5,3.3,"Listed Salary
+Project management in marketing, mainly coordination."
+4,Company D,"Hospitality, Real Estate/Infra",Assistant Project Manager,Singapore,2025-08-06,Applied,No,3,3,3,5,3.4,"Assistant PM role, administrative and coordination-heavy."
+5,Company E,"Consulting, Finance",Deals - M&A Operations Manager,Singapore,2025-08-07,Rejected,No,3,5,4,5,4.3,Consulting with a strong analytical focus (M&A).
+6,Company F,Consulting,Assistant Manager - Business Strategy & Operations,Singapore,2025-08-07,Applied,No,3,5,4,5,4.3,Consulting role focused on business strategy and analysis.
+7,Company G1,Consulting,Business Transformation Consultant / Associate - Manager / Consulting,Singapore,2025-08-08,Applied,No,3,5,4,5,4.3,Consulting role focused on business transformation.
+8,Company H ,EdTech,Program Operations Manager,Germany,2025-08-12,Rejected,Yes,4,4,3,5,3.9,"Program operations, mainly administrative/coordination."
+9,Company I,"HR/Recruitment, Tech/IT",IT Infrstructure Project Manager,Singapore,2025-08-12,Rejected,Yes,3,3,4,5,3.7,"Listed Salary
+IT infrastructure implies technical tools and systems."
+10,Company J,"EdTech, Community",Programme Manager (Holiday Programme),Singapore,2025-08-13,Applied,No,5,2,3,4,3.3,"Community program management, coordination-heavy."
+11,Company K,"HR/Recruitment, Tech/IT",Business Program Manager,Singapore,2025-08-13,Applied,No,3,3,4,5,3.7,"Tech/IT sector role, likely requires analytics/CRM tools."
+12,Company L ,"Real Estate/Infra, Tech/IT","Program Manager, Operations",Singapore,2025-08-15,Applied,No,3,2,3,5,3.1,"Operations-focused, less on technical tools, more on coordination."
+13,Company M ,"Finance (FinTech), Tech/IT",Strategy & Operations Manager,Singapore,2025-08-15,Rejected,Yes,3,3,4,5,3.7,"FinTech strategy role, highly analytical."
+14,Company N1,Logistics/Auto,After-sales Spare Parts Planning Specialist - Chinese Speaking,Netherlands,2025-08-17,Applied,No,2,3,2,5,2.9,"Planning specialist, narrow scope (spare parts), repetitive tasks."
+15,Company N2,Logistics/Auto,Product Manager - CEE（Hungary& Austria&Switzerland）,"Hungary 
+Austria
+Switzerland",2025-08-17,Applied,No,2,3,3,5,3.2,"Position no longer available
+Auto product management, some analytical work but in a traditional industry."
+16,Company N3,"Logistics/Auto, Media/Comm",NL-PR Specialist-Chinese Speaker,Netherlands,2025-08-17,Applied,No,2,3,2,5,2.9,"PR specialist, narrow scope, minimal technical growth."
+17,Company N4,"Logistics/Auto, Tech/IT",Business Support Specialist (Data),Netherlands,2025-08-17,Applied,No,2,4,5,5,4.1,"Explicitly mentions Data in the title, implying analytical work."
+18,Company O,"Media/Comm, Consulting",Associate Client Director,London,2025-08-17,Rejected,Yes,3,5,4,5,4.3,Consulting and client-facing analytical work.
+19,Company P,"Consulting, Project Mgmt Services","Manager, Program Administrator and Operations",Singapore,2025-08-17,Applied,No,3,3,3,5,3.4,"""Administrator"" title suggests coordination and ops over deep analysis."
+20,Company Q,"Finance (FinTech), Tech/IT",Sr Project Manager,Singapore,2025-08-17,Applied,No,3,3,4,5,3.7,FinTech/Tech role at a senior level.
+21,Company R1,"Aviation, EdTech",Learning Solutions Manager,Singapore,2025-08-20,Applied,No,4,2,3,5,3.3,"Learning & Development role, some exposure to new methods."
+22,Company S,EdTech,Chinese Curriculum Coordinator,Singapore,2025-08-20,Rejected,Yes,5,2,3,5,3.5,"Curriculum coordination, administrative and coordination-heavy."
+23,Company T,"Healthcare, Tech/IT",Project Manager (Healthcare Technology),Singapore,2025-08-21,Applied,No,3,3,4,5,3.7,"Listed Salary
+Healthcare Technology implies technical tools and systems."
+24,Company U,EdTech,Project Manager,Singapore,2025-08-21,Rejected,Yes,5,4,3,3,3.7,"Listed Salary
+Update: Expected salary 65k-75k rejected
+General Project Manager in EdTech."
+25,Company V1,"Media/Comm, AI, Tech/IT",Project Manager - AI Data Operation,Singapore,2025-08-22,Applied,No,3,5,5,5,4.6,Directly involves AI and data operations.
+26,Company W,"Consulting, Project Mgmt Services",Program & Event Coordinator,Singapore,2025-08-22,Applied,No,3,3,3,4,3.2,"Listed Salary
+""Coordinator"" title, mainly administrative/coordination."
+27,Company X,Media/Comm,"Project Manager, Content Lab",Singapore,2025-08-22,Applied,No,3,3,3,5,3.4,"Content project management, coordination-heavy."
+28,Company Y,"Enterprise Software, Tech/IT",Project Manager Associate,Singapore,2025-08-22,Rejected,Yes,3,3,4,5,3.7,Enterprise Software implementation requires technical knowledge.
+29,Company Z,"Enterprise Software (SaaS), Tech/IT",Assistant Project Manager,Singapore,2025-08-23,Applied,No,3,3,4,5,3.7,SaaS implementation requires technical knowledge.
+30,Company AA,"Consulting, Tech/IT",SR - Project Manager,Singapore,2025-08-23,Applied,No,3,3,4,5,3.7,"Consulting and Tech, implies use of technical methodologies."
+31,Company AB,"Tech/IT, Gaming?",Product Owner,Singapore,2025-08-24,Applied,No,3,3,4,5,3.7,"Product role in Tech, requires analytical and strategic tools."
+32,Company AC,Unknown (Likely Project Mgmt Services),Part Time Project Manager,Singapore,2025-08-24,Applied,No,3,3,3,2,2.8,"Listed Salary
+General PM role, likely coordination-heavy."
+33,Company AD,"Agile, Tech/IT, Gov/PS",GOV IT Project Manager,Singapore,2025-08-24,Applied,No,3,4,4,5,4,"IT Project Management, implies technical tools."
+34,Company AE,Enterprise Software (SaaS),Go-To-Market Training & Enablement Program Manager,Singapore,2025-08-24,Rejected,Yes,3,3,4,5,3.7,"SaaS role, requires deep product and CRM/analytics knowledge."
+35,Company AF,Gov/PS,Project Manager Executive,Singapore,2025-08-24,Applied,No,4,3,3,5,3.6,"30/09 - filled out form.sg indicated interested fields 
+Project management and policy, Data science / data solutions, Enterprise systems, Cyber intelligence and security, ICT enterprise infrastructure
+Government PM, likely some new methods but bureaucratic."
+36,Company R2,Aviation,Snr Exec / Asst Manager Project Management Office,Singapore,2025-08-26,Rejected,Yes,3,3,3,5,3.4," (1 Year Contract)  Finance Systems
+PMO role, mainly administrative and coordination."
+37,Company AG,"Tech/IT, Media/Comm",Graduate product manager,Singapore,2025-08-26,Rejected,Yes,3,3,4,5,3.7,"Indicated preference to work in Germany, however company offers work in London, Milan or remote
+Product role in Tech, requires analytical tools."
+38,Company AH,"Healthcare (MedTech), EdTech",Digital Training Expert,Singapore,2025-08-26,Applied,No,3,2,4,5,3.4,"""Digital"" focus implies use of technical systems and platforms."
+39,Company AI,"EdTech, NGO",Operations & Programming Project Manager consultant (non-technical),Singapore,2025-08-26,Rejected,Yes,4,3,3,5,3.6,"Explicitly ""non-technical,"" but exposure to program methods."
+40,Company AJ,"Gov/PS, Defense",Manager (Sentinel Programme),Singapore,2025-08-30,Interview,Yes,5,2,3,5,3.5,"Will hear back within 2 weeks if shortlisted
+Update: Interview 15/09
+Update 2: Process might take 1-2 months post interview for next update
+Government/defense program management, coordination-heavy."
+41,Company AK1,"Enterprise Software, Tech/IT",Customer Success Manager,Singapore,2025-08-31,Rejected,Yes,3,3,4,5,3.7,Tech role requiring analytics and technical product knowledge.
+42,Company AK2,"Enterprise Software, Tech/IT",Business Development Representative,Singapore,2025-08-31,Rejected,Yes,3,4,4,5,4,Tech sales role requiring CRM and analytical tools.
+43,Company AL,"EdTech, AI","Director of Product Management, Learning",USA,2025-08-31,Rejected,Yes,3,4,5,5,4.3,"Senior role in an AI-driven EdTech company, implying strategy."
+44,Company AM,EdTech,"Product Manager, Discovery & Progress",Spain,2025-09-01,Applied,No,3,4,4,5,4,"Product role, requires data analysis for discovery and progress."
+45,Company AN,Consulting,Junior Associate,Singapore,2025-09-02,Applied,No,3,5,4,5,4.3,"Consulting at a top firm, highly analytical."
+46,Company AO,Consulting,Associate Consultant,Singapore,2025-09-05,Applied,No,3,5,4,5,4.3,"Consulting at a top firm, highly analytical."
+47,Company AP,"HR/Recruitment, EdTech","Digital Learning Manager, Asia",Singapore,2025-09-05,Applied,No,4,4,4,5,4.2,"""Digital Learning"" implies use of Learning Management Systems (LMS) and analytics."
+48,Company AQ,"Consulting, Project Mgmt Services",Program Manager,Singapore,2025-09-09,Rejected,Yes,3,3,3,5,3.4,Likely event or program coordination.
+49,Company AR,Media/Comm,Project Manager,Singapore,2025-09-09,Applied,No,3,3,3,5,3.4,"Media project management, coordination-heavy."
+50,Company AS,"Consumer Goods, Tech/IT, Healthcare",IT Project Manager,Singapore,2025-09-09,Rejected,Yes,2,3,4,5,3.5,"IT Project Management, implies technical tools."
+51,Company AT,"Tech/IT, Project Mgmt Services",Project Coordinator,Singapore,2025-09-09,Applied,No,4,3,3,4,3.4,"""Coordinator"" title, junior and administrative."
+52,Company AU,HR/Recruitment,"Senior Executive, Project Management",Singapore,2025-09-09,Rejected,Yes,3,4,3,5,3.7,"Recruitment firm PM role, internal coordination."
+53,Company AV1,Consulting,Business Analyst,Singapore,2025-09-09,Applied,No,3,5,4,5,4.3,"Consulting role, inherently analytical."
+54,Company AW,"EdTech, Gov/PS","Senior Manager, Partnerships and Engagement",Singapore,2025-09-10,Applied,No,4,2,3,5,3.3,"Focus on partnerships, more relational than technical."
+55,Company AX,"AI, Tech/IT",Operations Manager,Singapore,2025-09-10,Rejected,Yes,3,4,5,5,4.3,Central to a world-leading AI research lab.
+56,Company AV2,Consulting,Business Analyst,Argentina,2025-09-10,Applied,No,3,5,4,5,4.3,"Consulting role, inherently analytical."
+57,Company AY,"Consulting, Tech/IT",Program Coordinator,Singapore,2025-09-11,Applied,No,4,3,3,5,3.6,"""Coordinator"" title, junior and administrative."
+58,Company AZ,Enterprise Software (SaaS),Senior Engagement Manager,Singapore,2025-09-11,Rejected,No,3,2,4,5,3.4,"Requires 1–2 technical tools (e.g. Excel, analytics, CRM) or client-facing analytical work."
+59,Company AAA,HR/Recruitment,"PMO, Business Operations l Contract",Singapore,2025-09-15,Applied,No,3,2,3,5,3.1,"PMO in a recruitment firm, internal coordination."
+60,Company AAB,"Finance, Tech/IT","Manager, Operations",Singapore,2025-09-16,Applied,No,3,3,3,5,3.4,"Operations management, coordination-heavy."
+61,Company AAC,Tech/IT (Audio),Project Manager,Singapore,2025-09-16,Applied,No,3,3,3,5,3.4,"Tech hardware PM, but likely more logistics than software tools."
+62,Company AAD,AI,Project Manager (AI Company),Singapore,2025-09-16,Applied,No,3,4,5,5,4.3,The company's core business is AI.
+63,Company AAE,NGO,Asst Project Manager,Singapore,2025-09-16,Applied,No,3,3,3,2,2.8,"NGO role, coordination-heavy with minimal technical tools."
+64,Company AAF,"Tech/IT, Gaming",Project Manager (Localization),Singapore,2025-09-16,Applied,No,3,3,3,5,3.4,"Localization PM, coordination and vendor management."
+65,Company AAG,"Tech/IT, Software Development",Project Manager - A25139,Singapore,2025-09-16,Applied,No,3,3,3,5,3.4,"Software dev PM, but title is generic."
+66,Company AAH,"Tech/IT, AI",Hackathon Program Manager,Singapore,2025-09-16,Applied,No,3,3,5,5,4,Manages technical programs at the intersection of AI and developer tools.
+67,Company AAI1,Unknown (Likely Tech/IT or Consulting),Risk & Control - PMO,Singapore,2025-09-16,Applied,No,3,3,3,5,3.4,"PMO role, focused on risk and control (compliance/coordination)."
+68,Company AAJ,Consumer Goods (Beverages),Project Manager,Singapore,2025-09-16,Applied,No,3,2,3,5,3.1,"PM in consumer goods, likely supply chain/logistics coordination."
+69,Company AAK,Consumer Goods (Appliances),Product Project Manager,Singapore,2025-09-16,Rejected,Yes,3,2,3,5,3.1,"Product PM in consumer goods, less tech-focused."
+70,Company AAL,"Tech/IT, Telecom",Project Manager - Catalogue,Singapore,2025-09-16,Rejected,Yes,3,3,3,5,3.4,"Catalogue management, likely repetitive data entry and coordination."
+71,Company AAM,Real Estate/Infra,Project Manager,Singapore,2025-09-16,Applied,No,3,2,3,5,3.1,"Real estate project management, coordination-heavy."
+72,Company AAN,"Tech/IT, Data & Analytics",Project Manager,Singapore,2025-09-16,Applied,No,3,4,4,5,4,"Company tag is Data & Analytics, implying data-focused projects."
+73,Company AAO,Finance (Sovereign Wealth Fund),"AVP/VP, Project Management Officer, COO's Office",Singapore,2025-09-16,Applied,No,2,3,3,5,3.2,"Senior PMO, strategic but likely more governance than technical."
+74,Company AAP,"AI, Media/Comm, Tech/IT",AI Program and Operation Management (Evaluation) - Flow,Singapore,2025-09-16,Applied,No,3,5,5,5,4.6,Core function is AI program management and evaluation.
+75,Company AAQ,Finance,Strategic Project Manager/ Business Analyst,Singapore,2025-09-17,Applied,No,3,3,4,5,3.7,"""Strategic"" and ""Business Analyst"" imply client-facing analytical work."
+76,Company AAR,"Defense, Aerospace, Tech/IT",Project Manager,Singapore,2025-09-17,Rejected,Yes,2,3,3,5,3.2,"Defense/Aerospace PM, heavy on process and coordination."
+77,Company AAS,"Consulting, Tech/IT",Project Manager,Singapore,2025-09-18,Applied,No,3,4,4,5,4,Consulting and Tech firm.
+78,Company AAT,"Tech/IT, Cloud, AI",Project Manager,Singapore,2025-09-19,Applied,No,3,4,4,5,4,"Cloud and AI company, technical projects."
+79,Company G2,"Consulting, Tech/IT",Digital Junior Project Consultant,Singapore,2025-09-19,Applied,No,3,5,4,5,4.3,Consulting in a digital/tech context.
+80,Company AAU,"Consulting, Market Research",Research Consultant (Project Management),Singapore,2025-09-20,Applied,No,3,3,3,5,3.4,"Research project management, coordination of data collection."
+81,Company AAV,"Tech/IT, Media/Comm",Go-To-Market Program Manager,Singapore,2025-09-20,Applied,No,3,4,4,5,4,Tech role requiring analytics for go-to-market strategy.
+82,Company AAW,"Tech/IT, Media/Comm, Gaming","Associate, Global Communications",Singapore,2025-09-20,Applied,No,3,4,3,5,3.7,"Communications role, not technical or data-focused."
+83,Company AAX,"Media/Comm, Translation, Tech/IT",Digital Project Manager,Spain,2025-09-20,Applied,No,3,3,3,4,3.2,"Translation project management, coordination-heavy."
+84,Company AAY,"Healthcare, AI",Project Manager,Netherlands,2025-09-20,Applied,No,3,4,5,5,4.3,The company's core business is AI in healthcare.
+85,Company AAZ,"Tech/IT, Software Development",Project Manager,Singapore,2025-09-20,Applied,No,3,3,4,5,3.7,"Software Development company, technical project management."
+86,Company AAAA,"EdTech, Tech/IT",191-003 Project Manager,Singapore,2025-09-20,Applied,No,3,3,3,5,3.4,"Listed Salary
+Training company PM, coordination of courses."
+87,Company V2,"Media/Comm, AI, Tech/IT","Associate Project Manager, Trust & Safety (AI Operations)",Singapore,2025-09-20,Applied,No,3,4,5,5,4.3,Directly involves AI Operations.
+88,Company AAAB,"Consumer Goods (Electronics), Tech/IT",Regional Project Operations Specialist,Singapore,2025-09-20,Applied,No,3,3,3,5,3.4,"Operations specialist, coordination and logistics."
+89,Conmpany Q1,"Finance (FinTech), Tech/IT",Sr Project Manager,Singapore,2025-09-20,Applied,No,3,3,4,5,3.7,FinTech/Tech role at a senior level.
+90,Company V3,"Media/Comm, AI, Tech/IT","Project Manager, Linguistic Intelligence - AI Data Service Operations",Singapore,2025-09-21,Applied,No,3,5,5,5,4.6,Focus on AI (Linguistic Intelligence) and data services.
+91,Company AAAC,"Tech/IT, Cloud",Project Manager,Singapore,2025-09-21,Applied,No,3,3,3,5,3.4,"Cloud services PM, but title is generic."
+92,Company AAAD,"Tech/IT (EDA Software), Media/Comm， AI",Translation Project Manager,Germany,2025-09-22,Applied,No,4,4,4,5,4.2,"Tech company, managing localization/translation tech."
+93,Company AAAE,"Tech/IT, Project Mgmt Services",Project Management Support Specialist,Germany,2025-09-22,Applied,No,3,3,3,5,3.4,"""Support Specialist"" title, administrative and coordination."
+94,Company AAAF,"Security, Tech/IT","Project Manager, Global Clients",Germany,2025-09-26,Rejected,Yes,3,3,3,5,3.4,"Security tech PM, likely installation and rollout coordination."
+95,Company AAAG,"HR/Recruitment, Executive Search",Project Manager,Singapore,2025-09-26,Applied,No,4,3,3,5,3.6,"Applied via email
+Recruitment firm PM, internal coordination."
+96,Company AAI2,Unknown (Likely Tech/IT or Consulting),Project Manager,Singapore,2025-09-28,Applied,No,3,3,3,5,3.4,"Generic PM title, assumed to be coordination-heavy."
+97,Company AAAH,"Energy, Industrial",Lead Project Manager,Singapore,2025-09-28,Rejected,Yes,3,3,4,5,3.7,"""Lead"" level in a complex industrial sector implies advanced tools."
+98,Company AAAI,"Telecom, Maritime",Project Manager,Singapore,2025-09-28,Applied,No,3,3,3,5,3.4,"Telecom PM, likely installation and rollout coordination."
+99,Company AAAJ1,"AI, Software Development",AI Application Developer,Singapore,2025-09-29,Applied,No,4,4,5,5,4.5,"Directly involves building AI applications, requiring technical tools."
+100,Company AAAJ2,"AI, Tech/IT",Product Manager,Singapore,2025-09-29,Applied,No,4,4,5,5,4.5,Product management for AI products.

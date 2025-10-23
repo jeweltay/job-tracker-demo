@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Job Application</title>
+    <!-- COPY THE EXACT SAME STYLES FROM add_job.html -->
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; }
+        textarea { height: 100px; resize: vertical; }
+        .btn { 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-primary { background-color: #2196F3; color: white; }
+        .btn-secondary { background-color: #6c757d; color: white; }
+        .btn-danger { background-color: #dc3545; color: white; }
+        .score-section { background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .total-score { background-color: #e8f5e8; padding: 15px; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; }
+        .weight { font-size: 12px; color: #666; margin-left: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Edit Job Application</h1>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label for="company_name">Company Name *</label>
+            <input type="text" id="company_name" name="company_name" value="{{ job.company_name }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="job_title">Job Title/Position *</label>
+            <input type="text" id="job_title" name="job_title" value="{{ job.job_title }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" value="{{ job.location }}" placeholder="e.g., Remote, New York, NY">
+        </div>
+        
+        <div class="form-group">
+            <label for="job_type">Tags/Job Type</label>
+            <input type="text" id="job_type" name="job_type" value="{{ job.job_type }}" placeholder="e.g., Tech, Marketing, Finance">
+        </div>
+        
+        <div class="form-group">
+            <label for="application_date">Date Applied</label>
+            <input type="date" id="application_date" name="application_date" value="{{ job.application_date }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="response_status">Application Stage *</label>
+            <select id="response_status" name="response_status" required>
+                <option value="">Select a stage...</option>
+                {% for stage in stage_options %}
+                <option value="{{ stage }}" {% if stage == job.response_status %}selected{% endif %}>{{ stage }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="score-section">
+            <h3>Scoring Rubric (1-5 scale)</h3>
+            <div class="score-grid">
+                <div class="form-group">
+                    <label for="interest_level">Interest Level <span class="weight">(30%)</span></label>
+                    <select id="interest_level" name="interest_level" required onchange="calculateTotal()">
+                        <option value="">Select score...</option>
+                        {% for score in score_options %}
+                        <option value="{{ score }}" {% if score == job.interest_level %}selected{% endif %}>{{ score }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="growth_potential">Growth Potential <span class="weight">(30%)</span></label>
+                    <select id="growth_potential" name="growth_potential" required onchange="calculateTotal()">
+                        <option value="">Select score...</option>
+                        {% for score in score_options %}
+                        <option value="{{ score }}" {% if score == job.growth_potential %}selected{% endif %}>{{ score }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="career_fit_now">Career Fit Now <span class="weight">(20%)</span></label>
+                    <select id="career_fit_now" name="career_fit_now" required onchange="calculateTotal()">
+                        <option value="">Select score...</option>
+                        {% for score in score_options %}
+                        <option value="{{ score }}" {% if score == job.career_fit_now %}selected{% endif %}>{{ score }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="salary_fit">Salary Fit <span class="weight">(20%)</span></label>
+                    <select id="salary_fit" name="salary_fit" required onchange="calculateTotal()">
+                        <option value="">Select score...</option>
+                        {% for score in score_options %}
+                        <option value="{{ score }}" {% if score == job.salary_fit %}selected{% endif %}>{{ score }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="total-score">
+                Calculated Total Score: <span id="total_score_display">{{ "%.1f"|format(job.total_score) }}</span>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" placeholder="Any additional notes about this application...">{{ job.notes }}</textarea>
+        </div>
+        
+        <div style="display: flex; gap: 10px; justify-content: space-between;">
+            <div>
+                <button type="submit" class="btn btn-primary">Update Job Application</button>
+                <a href="{{ url_for('home') }}" class="btn btn-secondary">Cancel</a>
+            </div>
+            <a href="/delete/{{ job.id }}" class="btn btn-danger" 
+               onclick="return confirm('Are you sure you want to delete this job application?')">Delete</a>
+        </div>
+    </form>
+
+    <script>
+        function calculateTotal() {
+            const interest = parseFloat(document.getElementById('interest_level').value) || 0;
+            const growth = parseFloat(document.getElementById('growth_potential').value) || 0;
+            const career = parseFloat(document.getElementById('career_fit_now').value) || 0;
+            const salary = parseFloat(document.getElementById('salary_fit').value) || 0;
+            
+            const total = (interest * 0.3) + (growth * 0.3) + (career * 0.2) + (salary * 0.2);
+            document.getElementById('total_score_display').textContent = total.toFixed(1);
+        }
+        
+        calculateTotal(); // Initialize with current values
+    </script>
+</body>
+</html>
